@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="JobSearchTrackingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="CompanyID" />
+    </Key>
+    <Property Name="CompanyID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Website" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Contacts" Relationship="Self.FK_Contact_Company" FromRole="Company" ToRole="Contact" />
+    <NavigationProperty Name="JSTrackings" Relationship="Self.FK_JSTracking_Company" FromRole="Company" ToRole="JSTracking" />
+  </EntityType>
+  <EntityType Name="Contact">
+    <Key>
+      <PropertyRef Name="ContactID" />
+    </Key>
+    <Property Name="ContactID" Type="Int32" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyID" Type="Int32" />
+    <NavigationProperty Name="Company" Relationship="Self.FK_Contact_Company" FromRole="Contact" ToRole="Company" />
+    <NavigationProperty Name="JSTrackings" Relationship="Self.FK_JSTracking_Contact" FromRole="Contact" ToRole="JSTracking" />
+    <Property Name="ContactName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="FollowUp1">
+    <Key>
+      <PropertyRef Name="JSTrackingID" />
+    </Key>
+    <Property Name="JSTrackingID" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FollowDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="JSTracking" Relationship="Self.FK_FollowUp1_JSTracking" FromRole="FollowUp1" ToRole="JSTracking" />
+  </EntityType>
+  <EntityType Name="FollowUp2">
+    <Key>
+      <PropertyRef Name="JSTrackingID" />
+    </Key>
+    <Property Name="JSTrackingID" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FollowUpDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="JSTracking" Relationship="Self.FK_FollowUp2_JSTracking" FromRole="FollowUp2" ToRole="JSTracking" />
+  </EntityType>
+  <EntityType Name="JSTracking">
+    <Key>
+      <PropertyRef Name="JSTrackingID" />
+    </Key>
+    <Property Name="JSTrackingID" Type="Int32" Nullable="false" />
+    <Property Name="CompanyID" Type="Int32" />
+    <Property Name="LocationID" Type="Int32" />
+    <Property Name="JobDescription" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+    <Property Name="SourcePosting" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Name="ContactID" Type="Int32" />
+    <Property Name="ResumeDate" Type="DateTime" Precision="0" />
+    <Property Name="InterviewDate" Type="DateTime" Precision="3" />
+    <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Company" Relationship="Self.FK_JSTracking_Company" FromRole="JSTracking" ToRole="Company" />
+    <NavigationProperty Name="Contact" Relationship="Self.FK_JSTracking_Contact" FromRole="JSTracking" ToRole="Contact" />
+    <NavigationProperty Name="FollowUp1" Relationship="Self.FK_FollowUp1_JSTracking" FromRole="JSTracking" ToRole="FollowUp1" />
+    <NavigationProperty Name="FollowUp2" Relationship="Self.FK_FollowUp2_JSTracking" FromRole="JSTracking" ToRole="FollowUp2" />
+    <NavigationProperty Name="Location" Relationship="Self.FK_JSTracking_Location" FromRole="JSTracking" ToRole="Location" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="LocationID" />
+    </Key>
+    <Property Name="LocationID" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="JSTrackings" Relationship="Self.FK_JSTracking_Location" FromRole="Location" ToRole="JSTracking" />
+  </EntityType>
+  <Association Name="FK_Contact_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+    <End Role="Contact" Type="Self.Contact" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="Contact">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JSTracking_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+    <End Role="JSTracking" Type="Self.JSTracking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="JSTracking">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JSTracking_Contact">
+    <End Role="Contact" Type="Self.Contact" Multiplicity="0..1" />
+    <End Role="JSTracking" Type="Self.JSTracking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contact">
+        <PropertyRef Name="ContactID" />
+      </Principal>
+      <Dependent Role="JSTracking">
+        <PropertyRef Name="ContactID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FollowUp1_JSTracking">
+    <End Role="JSTracking" Type="Self.JSTracking" Multiplicity="1" />
+    <End Role="FollowUp1" Type="Self.FollowUp1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="JSTracking">
+        <PropertyRef Name="JSTrackingID" />
+      </Principal>
+      <Dependent Role="FollowUp1">
+        <PropertyRef Name="JSTrackingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FollowUp2_JSTracking">
+    <End Role="JSTracking" Type="Self.JSTracking" Multiplicity="1" />
+    <End Role="FollowUp2" Type="Self.FollowUp2" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="JSTracking">
+        <PropertyRef Name="JSTrackingID" />
+      </Principal>
+      <Dependent Role="FollowUp2">
+        <PropertyRef Name="JSTrackingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JSTracking_Location">
+    <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+    <End Role="JSTracking" Type="Self.JSTracking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="LocationID" />
+      </Principal>
+      <Dependent Role="JSTracking">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="JobSearchTrackingEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Companies" EntityType="Self.Company" />
+    <EntitySet Name="Contacts" EntityType="Self.Contact" />
+    <EntitySet Name="FollowUp1" EntityType="Self.FollowUp1" />
+    <EntitySet Name="FollowUp2" EntityType="Self.FollowUp2" />
+    <EntitySet Name="JSTrackings" EntityType="Self.JSTracking" />
+    <EntitySet Name="Locations" EntityType="Self.Location" />
+    <AssociationSet Name="FK_Contact_Company" Association="Self.FK_Contact_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="Contact" EntitySet="Contacts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JSTracking_Company" Association="Self.FK_JSTracking_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="JSTracking" EntitySet="JSTrackings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JSTracking_Contact" Association="Self.FK_JSTracking_Contact">
+      <End Role="Contact" EntitySet="Contacts" />
+      <End Role="JSTracking" EntitySet="JSTrackings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FollowUp1_JSTracking" Association="Self.FK_FollowUp1_JSTracking">
+      <End Role="JSTracking" EntitySet="JSTrackings" />
+      <End Role="FollowUp1" EntitySet="FollowUp1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FollowUp2_JSTracking" Association="Self.FK_FollowUp2_JSTracking">
+      <End Role="JSTracking" EntitySet="JSTrackings" />
+      <End Role="FollowUp2" EntitySet="FollowUp2" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JSTracking_Location" Association="Self.FK_JSTracking_Location">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="JSTracking" EntitySet="JSTrackings" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

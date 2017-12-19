@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="JobSearchTrackingModelStoreContainer" CdmEntityContainer="JobSearchTrackingEntities">
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="JobSearchTrackingModel.Company">
+        <MappingFragment StoreEntitySet="Company">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Website" ColumnName="Website" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contacts">
+      <EntityTypeMapping TypeName="JobSearchTrackingModel.Contact">
+        <MappingFragment StoreEntitySet="Contact">
+          <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FollowUp1">
+      <EntityTypeMapping TypeName="JobSearchTrackingModel.FollowUp1">
+        <MappingFragment StoreEntitySet="FollowUp1">
+          <ScalarProperty Name="JSTrackingID" ColumnName="JSTrackingID" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="FollowDate" ColumnName="FollowDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FollowUp2">
+      <EntityTypeMapping TypeName="JobSearchTrackingModel.FollowUp2">
+        <MappingFragment StoreEntitySet="FollowUp2">
+          <ScalarProperty Name="JSTrackingID" ColumnName="JSTrackingID" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="FollowUpDate" ColumnName="FollowUpDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JSTrackings">
+      <EntityTypeMapping TypeName="JobSearchTrackingModel.JSTracking">
+        <MappingFragment StoreEntitySet="JSTracking">
+          <ScalarProperty Name="JSTrackingID" ColumnName="JSTrackingID" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
+          <ScalarProperty Name="SourcePosting" ColumnName="SourcePosting" />
+          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="ResumeDate" ColumnName="ResumeDate" />
+          <ScalarProperty Name="InterviewDate" ColumnName="InterviewDate" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="JobSearchTrackingModel.Location">
+        <MappingFragment StoreEntitySet="Location">
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
